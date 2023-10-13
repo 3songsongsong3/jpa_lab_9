@@ -6,6 +6,7 @@ import jpabook.jpashop.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -16,6 +17,17 @@ public class ItemController {
 
     @Autowired ItemService itemService;
 
+    /** 상품 수정 폼 */
+    @RequestMapping(value = "/items/{itemId}/edit",
+                    method = RequestMethod.GET)
+    public String updateItemForm(@PathVariable("itemId") Long itemId,
+                                 Model model) {
+
+        Item item = itemService.findItem(itemId);
+        model.addAttribute("item", item);
+        return "items/updateItemForm";
+
+    }
     @RequestMapping(value = "/items", method = RequestMethod.GET)
     public String list(Model model) {
 
